@@ -34,3 +34,14 @@ function copyFunction() {
   /* Alert the copied text */
   alert("Copied the text: " + copyText.value);
 }
+
+// This is currently under Development
+document.querySelector(".selengkapnya").addEventListener("click", function () {
+  swal("This Site is Under Development🙏", "Be right back!", "info");
+});
+document.querySelector(".selengkapnya2").addEventListener("click", function () {
+  swal("This Site is Under Development🙏", "Be right back!", "info");
+});
+document.querySelector(".selengkapnya3").addEventListener("click", function () {
+  swal("This Site is Under Development🙏", "Be right back!", "info");
+});
