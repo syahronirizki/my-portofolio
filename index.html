@@ -354,7 +354,7 @@
       <div class="flex flex-wrap">
         <div class="w-full px-4 lg:w-1/2 xl:w-1/4">
           <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-10">
-            <img src="https://source.unsplash.com/360x200?code" alt="code" class="w-full" />
+            <img id="programmingRandomImage" alt="Programming" class="w-full h-[200px] object-cover" />
             <div class="py-8 px-6">
               <h3>
                 <a href="#" class="block font-semibold mb-3 text-xl text-dark hover:text-primary truncate">How to Learn
@@ -363,32 +363,27 @@
               <p class="font-medium text-base text-secondary mb-4">
                 the first intention, the second is that you must have a laptop or PC.
               </p>
-              <!-- <button
-                class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80 selengkapnya">Read
-                more</button> -->
+              <button class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80" onclick="showProgrammingAlert()">Read more</button>
             </div>
           </div>
         </div>
         <div class="w-full px-4 lg:w-1/2 xl:w-1/4">
           <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-10">
-            <img src="https://source.unsplash.com/360x200?jdm+cars" alt="Jdm Cars" class="w-full" />
+            <img id="jdmRandomImage" alt="JDM Cars" class="w-full h-[200px] object-cover" />
             <div class="py-8 px-6">
               <h3>
-                <a href="#" class="block font-semibold mb-3 text-xl text-dark hover:text-primary truncate">What it
-                  is?</a>
+                <a href="#" class="block font-semibold mb-3 text-xl text-dark hover:text-primary truncate">JDM Dream Cars</a>
               </h3>
               <p class="font-medium text-base text-secondary mb-4">
-                My Dream cars
+                Japanese domestic market cars have always been my passion and dream to own someday.
               </p>
-              <!-- <button
-                class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80 selengkapnya2">Read
-                more</button> -->
+              <button class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80" onclick="showJdmAlert()">Read more</button>
             </div>
           </div>
         </div>
         <div class="w-full px-4 lg:w-1/2 xl:w-1/4">
           <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-10">
-            <img src="https://source.unsplash.com/360x200?japanese" alt="Japanese" class="w-full" />
+            <img id="japaneseRandomImage" alt="Japanese" class="w-full h-[200px] object-cover" />
             <div class="py-8 px-6">
               <h3>
                 <a href="#" class="block font-semibold mb-3 text-xl text-dark hover:text-primary truncate">Japanese</a>
@@ -397,15 +392,13 @@
                 The biggest adventure you can ever take is to live the life of your dreams.<br>
                 私の最大の夢は休暇で日本に行くことです。仕事の時間を犠牲にすることなく、負担なく休暇を過ごすことができます。
               </p>
-              <!-- <button
-                class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80 selengkapnya3">Read
-                more</button> -->
+              <button class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80" onclick="showJapaneseAlert()">Read more</button>
             </div>
           </div>
         </div>
         <div class="w-full px-4 lg:w-1/2 xl:w-1/4">
           <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-10">
-            <img src="https://source.unsplash.com/360x200?web+developer" alt="Japanese" class="w-full" />
+            <img id="developerRandomImage" alt="Developer" class="w-full h-[200px] object-cover" />
             <div class="py-8 px-6">
               <h3>
                 <a href="#" class="block font-semibold mb-3 text-xl text-dark hover:text-primary truncate">Currently
@@ -414,9 +407,7 @@
               <p class="font-medium text-base text-secondary mb-4">
                 As a Full-Stack Web Developer.
               </p>
-              <!-- <button
-                class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80 selengkapnya3">Read
-                more</button> -->
+              <button class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80" onclick="showDeveloperAlert()">Read more</button>
             </div>
           </div>
         </div>
@@ -424,6 +415,200 @@
     </div>
   </section>
   <!-- {{ Blog Section End }} -->
+
+  <script src="dist/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // Function to fetch random images for each category
+    function fetchRandomImages() {
+      const categories = {
+        programming: 'programming+code',
+        jdm: 'jdm+cars',
+        japanese: 'japan+travel',
+        developer: 'web+developer'
+      };
+
+      Object.entries(categories).forEach(([category, query]) => {
+        fetch(`https://api.unsplash.com/photos/random?query=${query}&orientation=landscape&client_id=2wAlp_DyJwbm7_9zLxCT3wPTD90Ks7XGHYGrdAE6kO8`)
+          .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+          })
+          .then(data => {
+            document.getElementById(`${category}RandomImage`).src = data.urls.regular;
+          })
+          .catch(error => {
+            console.log(`Error fetching random ${category} image:`, error);
+          });
+      });
+    }
+
+    // Load images when DOM is ready
+    document.addEventListener('DOMContentLoaded', fetchRandomImages);
+
+    // Helper function to add minimize button to modals
+    function addMinimizeButton() {
+      const popup = Swal.getPopup();
+      const minimizeBtn = document.createElement('button');
+      minimizeBtn.innerHTML = '−';
+      minimizeBtn.className = 'swal2-minimize';
+      minimizeBtn.style.cssText = `
+        position: absolute;
+        right: 40px;
+        top: 0;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        padding: 0 10px;
+        height: 100%;
+      `;
+      minimizeBtn.onclick = () => {
+        popup.style.transform = popup.style.transform === 'scale(0.5)' ? 'scale(1)' : 'scale(0.5)';
+        popup.style.transition = 'transform 0.3s ease';
+      };
+      popup.querySelector('.swal2-close').insertAdjacentElement('beforebegin', minimizeBtn);
+    }
+
+    // Alert functions for each category
+    function showProgrammingAlert() {
+      const image = document.getElementById('programmingRandomImage').src;
+      
+      Swal.fire({
+        title: 'How to Learn Programming',
+        html: `
+          <div class="text-left">
+            <div class="grid grid-cols-1 gap-4 mb-4">
+              <img src="${image}" alt="Programming" class="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+            </div>
+            <p class="mb-3 text-secondary text-sm">
+              Learning programming requires dedication and the right mindset. The first step is having the right tools - a laptop or PC is essential.
+            </p>
+            <p class="mb-3 text-secondary text-sm">
+              Start with understanding the basics of programming logic and gradually move to more complex concepts. Practice regularly and build projects to reinforce your learning.
+            </p>
+          </div>
+        `,
+        width: '500px',
+        padding: '1rem',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: { popup: 'swal-wide', content: 'text-left' },
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        stopKeydownPropagation: false,
+        focusConfirm: false,
+        returnFocus: true,
+        didOpen: addMinimizeButton
+      });
+    }
+
+    function showJdmAlert() {
+      const image = document.getElementById('jdmRandomImage').src;
+      
+      Swal.fire({
+        title: 'JDM Dream Cars',
+        html: `
+          <div class="text-left">
+            <div class="grid grid-cols-1 gap-4 mb-4">
+              <img src="${image}" alt="JDM Cars" class="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+            </div>
+            <p class="mb-3 text-secondary text-sm">
+              Japanese domestic market cars have always been my passion and dream to own someday. The unique styling, engineering excellence, and cultural significance make JDM vehicles stand out in the automotive world.
+            </p>
+            <p class="mb-3 text-secondary text-sm">
+              From the iconic Nissan Skyline GT-R to the legendary Toyota Supra, these machines represent the perfect blend of performance, reliability, and distinctive design.
+            </p>
+          </div>
+        `,
+        width: '500px',
+        padding: '1rem',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: { popup: 'swal-wide', content: 'text-left' },
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        stopKeydownPropagation: false,
+        focusConfirm: false,
+        returnFocus: true,
+        didOpen: addMinimizeButton
+      });
+    }
+
+    function showJapaneseAlert() {
+      const image = document.getElementById('japaneseRandomImage').src;
+      
+      Swal.fire({
+        title: 'Japanese Culture',
+        html: `
+          <div class="text-left">
+            <div class="grid grid-cols-1 gap-4 mb-4">
+              <img src="${image}" alt="Japanese Culture" class="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+            </div>
+            <p class="mb-3 text-secondary text-sm">
+              The biggest adventure you can ever take is to live the life of your dreams. Japan offers a unique blend of traditional culture and modern innovation.
+            </p>
+            <p class="mb-3 text-secondary text-sm">
+              私の最大の夢は休暇で日本に行くことです。仕事の時間を犠牲にすることなく、負担なく休暇を過ごすことができます。
+              (My biggest dream is to visit Japan on vacation. I can enjoy my vacation without sacrificing work time.)
+            </p>
+          </div>
+        `,
+        width: '500px',
+        padding: '1rem',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: { popup: 'swal-wide', content: 'text-left' },
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        stopKeydownPropagation: false,
+        focusConfirm: false,
+        returnFocus: true,
+        didOpen: addMinimizeButton
+      });
+    }
+
+    function showDeveloperAlert() {
+      const image = document.getElementById('developerRandomImage').src;
+      
+      Swal.fire({
+        title: 'Full-Stack Web Developer',
+        html: `
+          <div class="text-left">
+            <div class="grid grid-cols-1 gap-4 mb-4">
+              <img src="${image}" alt="Web Development" class="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+            </div>
+            <p class="mb-3 text-secondary text-sm">
+              As a Full-Stack Web Developer, I work with both front-end and back-end technologies to create complete web applications.
+            </p>
+            <p class="mb-3 text-secondary text-sm">
+              My expertise includes modern frameworks, databases, and deployment strategies to deliver robust and scalable solutions.
+            </p>
+          </div>
+        `,
+        width: '500px',
+        padding: '1rem',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: { popup: 'swal-wide', content: 'text-left' },
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        stopKeydownPropagation: false,
+        focusConfirm: false,
+        returnFocus: true,
+        didOpen: addMinimizeButton
+      });
+    }
+  </script>
 
   <!-- {{ Footer Section Start }} -->
   <footer class="bg-dark pt-24 pb-12">
@@ -514,7 +699,6 @@
     </div>
   </footer>
   <!-- {{ Footer Section End }} -->
-  <script src="dist/js/script.js"></script>
 </body>
 
 </html>
